@@ -1,8 +1,7 @@
 ---
-layout: default
-permalink: index.html
-title: Ed Nunes
-description: The Alpaca Paradise
+layout:     home
+permalink:  index.html
+title:      Edu Nunes
 ---
 
 ## Welcome
