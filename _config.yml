@@ -1,4 +1,3 @@
-theme                  : "minimal-mistakes-jekyll"
 minimal_mistakes_skin  : "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
@@ -23,13 +22,10 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: mailto:diofanto.nunes@gmail.com
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
-      # url: "https://dioph.github.io"
+      url: mailto:diofanto.nunes@gmail.com
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url: "https://github.com/dioph"
+      url: "https://github.com/dioph"
 
 # Site Footer
 footer:

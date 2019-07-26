@@ -4,5 +4,3 @@ title: Proof Paradise
 permalink: /proofs/
 usemathjax: true
 ---
-
-eggs
