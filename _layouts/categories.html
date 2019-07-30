@@ -15,9 +15,14 @@ layout: archive
   {% for i in (1..categories_max) reversed %}
     {% for category in site.categories %}
       {% if category[1].size == i %}
+        {% for cat in site.data.categories %}
+            {% if category[0] == cat.slug %}
+                {% assign category_name = cat.name %}
+            {% endif %}
+        {% endfor %}
         <li>
           <a href="#{{ category[0] | slugify }}">
-            <strong>{{ category[0] }}</strong> <span class="taxonomy__count">{{ i }}</span>
+            <strong>{{ category_name }}</strong> <span class="taxonomy__count">{{ i }}</span>
           </a>
         </li>
       {% endif %}
@@ -28,8 +33,13 @@ layout: archive
 {% for i in (1..categories_max) reversed %}
   {% for category in site.categories %}
     {% if category[1].size == i %}
+        {% for cat in site.data.categories %}
+            {% if category[0] == cat.slug %}
+                {% assign category_name = cat.name %}
+            {% endif %}
+        {% endfor %}
       <section id="{{ category[0] | slugify | downcase }}" class="taxonomy__section">
-        <h2 class="archive__subtitle">{{ category[0] }}</h2>
+        <h2 class="archive__subtitle">{{ category_name }}</h2>
         <div class="entries-{{ page.entries_layout | default: 'list' }}">
           {% for post in category.last %}
             {% include archive-single.html type=page.entries_layout %}

@@ -256,6 +256,22 @@
           </a>
         </li>
       {% endif %}
+      
+      {% if author.telegram %}
+        <li>
+          <a href="https://t.me/{{ author.telegram }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-telegram" aria-hidden="true"></i> Telegram
+          </a>
+        </li>
+      {% endif %}
+        
+      {% if author.reddit %}
+        <li>
+          <a href="https://www.reddit.com/user/{{ author.reddit }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-reddit" aria-hidden="true"></i> Reddit
+          </a>
+        </li>
+      {% endif %}
 
       {% include author-profile-custom-links.html %}
     </ul>

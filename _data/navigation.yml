@@ -2,9 +2,9 @@ main:
   - title: About me
     url: /about/
     
-  - title: Proof Paradise
-    url: /proofs/
+  - title: Blog
+    url: /blog/
     
-  - title: Casual Code
-    url: /code/
+  - title: CV
+    url: /cv/cv.pdf
 
