@@ -19,7 +19,7 @@ search                   : true
 # Site Author
 author:
   name             : "Edu Nunes"
-  avatar           : "/assets/images/rocktor.gif"
+  avatar           : "/assets/images/okarin.jpg"
   bio              : "Undergrad EE & Physics"
   location         : "Natal, Brazil"
   email            : diofanto.nunes@gmail.com
@@ -109,7 +109,7 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-paginate: 2 # amount of posts to show
+paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 timezone: America/Fortaleza # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
