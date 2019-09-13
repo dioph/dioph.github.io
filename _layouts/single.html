@@ -51,13 +51,14 @@ layout: default
           <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label }}</h4>
         {% endif %}
         {% include page__taxonomy.html %}
+        {% if page.tagify %}{% include tag-list.html %}{% endif %}
         {% if page.last_modified_at %}
           <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ page.last_modified_at | date: "%Y-%m-%d" }}">{{ page.last_modified_at | date: "%B %d, %Y" }}</time></p>
         {% elsif page.date %}
           <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time></p>
         {% endif %}
       </footer>
-
+      
       {% if page.share %}{% include social-share.html %}{% endif %}
 
       {% comment %}{% include post_pagination.html %}{% endcomment %}
@@ -74,7 +75,7 @@ layout: default
         {{ site.data.ui-text[site.locale].related_label | default: "You May Also Enjoy" }}
       </h4>
       <div class="grid__wrapper">
-        {% assign posts = site.categories[page.categories[0]][0] | sample:5 %}
+        {% assign posts = site.categories[page.category] | sample:5 %}
             {% assign relatedCount = 0 %}
             {% for post in posts %}
               {% if post.url != page.url %}

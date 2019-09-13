@@ -126,6 +126,7 @@ defaults:
       share: true
       related: true
       usemathjax: true
+      tagify: true
   - scope:
       path: ""
       type: pages
