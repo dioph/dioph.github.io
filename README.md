@@ -6,8 +6,6 @@
 
 ## Local build
 
-```bash
-bundle exec jekyll serve
-```
+    $ bundle exec jekyll serve
 
 
