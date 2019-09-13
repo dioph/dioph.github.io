@@ -1,7 +1,7 @@
 ---
 title: "Python"
 layout: tag
-permalink: /truepython/
+permalink: /tags/python/
 taxonomy: python
     
 ---

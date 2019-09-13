@@ -1,7 +1,7 @@
 ---
 title: "OpenCV"
 layout: tag
-permalink: /trueopencv/
+permalink: /tags/opencv/
 taxonomy: opencv
     
 ---
