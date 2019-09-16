@@ -3,9 +3,6 @@ title: "Manipulação de histogramas"
 date: 2019-08-28
 tags: [python, opencv]
 category: casual-code
-header:
-    teaser: /assets/images/placeholder-300x225.png
-    
 ---
 <!--more-->
 ## Equalização

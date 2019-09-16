@@ -3,9 +3,6 @@ title: "Preenchendo regiões"
 date: 2019-08-14
 tags: [python, opencv]
 category: casual-code
-header:
-    teaser: /assets/images/placeholder-300x225.png
-
 ---
 <!--more-->
 ```python

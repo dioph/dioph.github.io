@@ -4,8 +4,7 @@ date: 2019-08-09
 tags: [python, opencv]
 category: casual-code
 header:
-    teaser: /assets/images/placeholder-300x225.png
-
+    teaser: /assets/images/regions.png
 ---
 
 Esse é o primeiro post de uma série de exemplos práticos de processamento de imagens em Python usando OpenCV.<!--more--> Veremos como é simples realizar operações sobre arquivos de imagens.
@@ -97,7 +96,7 @@ dest[:N//2, M//2:] = orig[N//2:, :M//2]
 dest[N//2:, :M//2] = orig[:N//2, M//2:]
 dest[N//2:, M//2:] = orig[:N//2, :M//2]
 
-cv2.imshow('imagem', dest)
+cv2.imshow('swapped', dest)
 cv2.waitKey()
 ```
-
+![](/assets/images/trocaregioes.png)
