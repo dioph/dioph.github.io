@@ -17,20 +17,27 @@ $$g(x,y)=255-f(x,y)$$
 import cv2
 import sys
 
-p1x, p1y = input('p1: ').split(',')
-p1x = int(p1x)
-p1y = int(p1y)
+xi, yi = input('pi: ').split(',')
+xi = int(xi)
+yi = int(yi)
 
-p2x, p2y = input('p2: ').split(',')
-p2x = int(p2x)
-p2y = int(p2y)
+xj, yj = input('pj: ').split(',')
+xj = int(xj)
+yj = int(yj)
 
 filename = sys.argv[1]
 image = cv2.imread(filename, cv2.IMREAD_COLOR)
-image[p1x:p2x, p1y:p2y] = 255 - image[p1x:p2x, p1y:p2y]
-cv2.imshow('negativo', image)
+image[xi:xj, yi:yj] = 255 - image[xi:xj, yi:yj]
+cv2.imshow('negative', image)
 cv2.waitKey()
 ```
+
+```shell
+pi: 100, 100
+pj: 200, 200
+```
+
+![](/assets/images/regions.png)
 
 ### Versão interativa
 
@@ -39,47 +46,43 @@ O OpenCV
 ```python
 import cv2
 import sys
-import numpy as np
+
+filename = sys.argv[1]
+original = cv2.imread(filename, cv2.IMREAD_COLOR)
+negative = original.copy()
 
 drawing = False
 xo, yo = -1, -1
 
-filename = sys.argv[1]
-image = cv2.imread(filename, cv2.IMREAD_COLOR)
-img = image.copy()
-
 def invert(event, x, y, flags, param):
-    global drawing, xo, yo, img
+    global drawing, xo, yo, negative
     if event == cv2.EVENT_LBUTTONDOWN:
         drawing = True
         xo, yo = x, y
     elif event == cv2.EVENT_MOUSEMOVE:
-        if drawing == True:
-            xi = min(xo, x)
-            xj = max(xo, x)
-            yi = min(yo, y)
-            yj = max(yo, y)
-            img[yi:yj, xi:xj] = 255 - image[yi:yj, xi:xj]
+        if drawing:
+            xi, xj = sorted([xo, x])
+            yi, yj = sorted([yo, y])
+            negative[yi:yj, xi:xj] = 255 - original[yi:yj, xi:xj]
     elif event == cv2.EVENT_LBUTTONUP:
         drawing = False
     elif event == cv2.EVENT_RBUTTONDOWN:
         drawing = False
-        img = image.copy()
+        negative = original.copy()
 
-cv2.namedWindow('regions')
-cv2.setMouseCallback('regions', invert)
+cv2.namedWindow('negative')
+cv2.setMouseCallback('negative', invert)
 
 while(1):
-    cv2.imshow('regions', img)
+    cv2.imshow('negative', negative)
     if cv2.waitKey(20) & 0xFF == 27:
         break
-cv2.destroyAllWindows()
 
 ```
 
-<div style="text-align:center"><img src="/assets/gifs/regions2.gif" /></div>
+![](/assets/images/regions2.gif)
 
-## Manipulação de quadrantes
+## Regiões de Interesse
 
 ```python
 import cv2
