@@ -3,8 +3,12 @@ title: "Manipulação de histogramas"
 date: 2019-08-28
 tags: [python, opencv]
 category: casual-code
+header:
+    teaser: /assets/images/histograms.png
 ---
+Nesse tutorial vamos buscar entender o que são e para que podem ser usados histogramas de imagens.
 <!--more-->
+
 ## Equalização
 
 ```python

@@ -9,11 +9,58 @@ header:
 ---
 <!--more-->
 
+```python
+import cv2
+import sys
+
+filename = sys.argv[1]
+image = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
+
+M, N = image.shape
+```
+
 ![](/assets/images/bolhas.png)
+
+```python
+for i in range(M):
+    for j in [0, N-1]:
+        if image[i, j] == 255:
+            cv2.floodFill(image, None, (j, i), 0)
+for i in [0, M-1]:
+    for j in range(N):
+        if image[i, j] == 255:
+            cv2.floodFill(image, None, (j, i), 0)
+```
 
 ![](/assets/images/passo1.png)
 
+```python
+nobjects = 0
+for i in range(M):
+    for j in range(N):
+        if image[i, j] == 255:
+            nobjects += 1
+            cv2.floodFill(image, None, (j, i), nobjects)
+```
+
+```python
+cv2.floodFill(image, None, (0, 0), 255)
+```
+
 ![](/assets/images/passo2.png)
+
+```python
+nburacos = 0
+for i in range(M):
+    for j in range(N):
+        if image[i, j] == 0:
+            if 0 < image[i, j-1] < 255:
+                nburacos += 1
+                cv2.floodFill(image, None, (j-1, i), 255)
+            cv2.floodFill(image, None, (j, i), 255)
+```
+
+![](/assets/images/labeling.png)
 
 ```python
 import cv2
@@ -59,7 +106,6 @@ print('TOTAL DE BOLHAS:', nobjects)
 print('    COM BURACOS:', nburacos)
 print('    SEM BURACOS:', nobjects-nburacos)
 
-cv2.imshow('test', image)
 cv2.imwrite('labeling.png', image)
 cv2.waitKey()
 ```
@@ -72,5 +118,3 @@ TOTAL DE BOLHAS: 21
     COM BURACOS: 7
     SEM BURACOS: 14
 ```
-
-![](/assets/images/labeling.png)

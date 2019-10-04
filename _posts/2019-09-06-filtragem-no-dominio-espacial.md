@@ -65,3 +65,63 @@ while True:
 ```
 
 ## Tilt-Shift
+
+```python
+import cv2
+import numpy as np
+import sys
+
+height_slider_max = 100
+decay_slider_max = 100
+offset_slider_max = 100
+
+height_slider_name = "Region size (%)"
+decay_slider_name = "Decay (%)"
+offset_slider_name = "Center height (%)"
+
+filename = sys.argv[1]
+original = cv2.imread(filename)
+M, N = original.shape[:2]
+
+blur = np.ones((5, 5)) / 25
+filtered = cv2.filter2D(original, -1, blur)
+
+mask = np.ones_like(original, dtype=float)
+mesh_horiz, mesh_vert = np.meshgrid(np.arange(M), np.arange(N))
+
+window_name = "tiltshift"
+cv2.namedWindow(window_name, cv2.WINDOW_AUTOSIZE)
+
+def alpha(x, d, l1, l2):
+    return 0.5 * (np.tanh((x - l1) / d) - np.tanh((x - l2) / d))
+
+def on_change(val):
+    height = cv2.getTrackbarPos(height_slider_name, window_name)
+    decay = cv2.getTrackbarPos(decay_slider_name, window_name)
+    offset = cv2.getTrackbarPos(offset_slider_name, window_name)
+
+    d = decay * M / 100
+    l1 = (offset - height / 2) * M / 100
+    l2 = (offset + height / 2) * M / 100
+    mask = alpha(mesh_vert, d, l1, l2)
+    mask = np.atleast_3d(mask)
+
+    blended = mask * original + (1 - mask) * filtered
+    blended = np.array(blended, np.uint8)
+    cv2.imshow(window_name, blended)
+
+cv2.createTrackbar(height_slider_name, window_name, 0,
+                   height_slider_max, on_change)
+
+cv2.createTrackbar(decay_slider_name, window_name, 0,
+                   decay_slider_max, on_change)
+
+cv2.createTrackbar(offset_slider_name, window_name, 0,
+                   offset_slider_max, on_change)
+
+on_change(0)
+cv2.waitKey(0)
+```
+
+### Análise de vídeo
+
