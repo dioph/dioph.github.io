@@ -19,7 +19,11 @@ image = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
 M, N = image.shape
 ```
 
-![](/assets/images/bolhas.png)
+<p align="center">
+    <img src="../../assets/images/bolhas.png">
+</p>
+
+Não estamos interessados em bolhas tocando as bordas da imagem, uma vez que não podemos determinar com certeza se elas apresentam buracos ou não. A primeira coisa a se fazer será portanto preencher todos os objetos na borda da imagem com o tom de fundo `0`. Em outras palavras, basta invocar `floodFill` nos pixels da borda da imagem (colunas 0 e N-1, linhas 0 e M-1) que possuam tom de objeto `255`:
 
 ```python
 for i in range(M):
@@ -32,7 +36,11 @@ for i in [0, M-1]:
             cv2.floodFill(image, None, (j, i), 0)
 ```
 
-![](/assets/images/passo1.png)
+<p align="center">
+    <img src="../../assets/images/bolhas1.png">
+</p>
+
+Todas as bolhas podem então ser rotuladas com o `floodFill` com um inteiro diferente, possibilitando a contagem do total de objetos na imagem:
 
 ```python
 nobjects = 0
@@ -43,11 +51,17 @@ for i in range(M):
             cv2.floodFill(image, None, (j, i), nobjects)
 ```
 
+Agora ao usar `floodFill` em um dos pixels da borda podemos "pintar" o fundo de branco. Qualquer pixel que ainda possua tom de fundo `0` corresponderá aos buracos internos às bolhas:
+
 ```python
 cv2.floodFill(image, None, (0, 0), 255)
 ```
 
-![](/assets/images/passo2.png)
+<p align="center">
+    <img src="../../assets/images/bolhas2.png">
+</p>
+
+Agora é fácil contar o número de bolhas com buracos preenchendo cada um deles com `floodFill`. Para evitar contagem repetida em bolhas com mais de um buraco, também preenchemos a bolha simultaneamente, de forma que qualquer buraco subsequente pode ser preenchido sem ser contabilizado.
 
 ```python
 nburacos = 0
@@ -60,7 +74,11 @@ for i in range(M):
             cv2.floodFill(image, None, (j, i), 255)
 ```
 
-![](/assets/images/labeling.png)
+<p align="center">
+    <img src="../../assets/images/labeling.png">
+</p>
+
+O código final e seu exemplo de execução seriam algo do tipo:
 
 ```python
 import cv2
@@ -105,9 +123,6 @@ for i in range(M):
 print('TOTAL DE BOLHAS:', nobjects)
 print('    COM BURACOS:', nburacos)
 print('    SEM BURACOS:', nobjects-nburacos)
-
-cv2.imwrite('labeling.png', image)
-cv2.waitKey()
 ```
 
 Saída:

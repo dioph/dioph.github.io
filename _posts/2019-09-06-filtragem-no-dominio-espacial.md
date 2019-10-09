@@ -86,14 +86,20 @@ M, N = original.shape[:2]
 blur = np.ones((5, 5)) / 25
 filtered = cv2.filter2D(original, -1, blur)
 
-mask = np.ones_like(original, dtype=float)
-mesh_horiz, mesh_vert = np.meshgrid(np.arange(M), np.arange(N))
+_, mesh = np.meshgrid(np.arange(N), np.arange(M))
 
-window_name = "tiltshift"
+window_name = "tilt-shift"
 cv2.namedWindow(window_name, cv2.WINDOW_AUTOSIZE)
 
 def alpha(x, d, l1, l2):
     return 0.5 * (np.tanh((x - l1) / d) - np.tanh((x - l2) / d))
+
+def tiltshift(d, l1, l2):
+    mask = alpha(mesh, d, l1, l2)
+    mask = np.atleast_3d(mask)
+    blended = mask * original + (1 - mask) * filtered
+    blended = blended.astype(np.uint8)
+    return blended
 
 def on_change(val):
     height = cv2.getTrackbarPos(height_slider_name, window_name)
@@ -103,11 +109,8 @@ def on_change(val):
     d = decay * M / 100
     l1 = (offset - height / 2) * M / 100
     l2 = (offset + height / 2) * M / 100
-    mask = alpha(mesh_vert, d, l1, l2)
-    mask = np.atleast_3d(mask)
 
-    blended = mask * original + (1 - mask) * filtered
-    blended = np.array(blended, np.uint8)
+    blended = tiltshift(d, l1, l2)
     cv2.imshow(window_name, blended)
 
 cv2.createTrackbar(height_slider_name, window_name, 0,
@@ -125,3 +128,126 @@ cv2.waitKey(0)
 
 ### Análise de vídeo
 
+```python
+import cv2
+import numpy as np
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("filename", help="input video file path")
+parser.add_argument("-o", "--output", default="output.avi",
+                    help="output file path (default: ouput.avi)")
+parser.add_argument("-s", "--size", type=float, required=True,
+                    help="region size in %% of image height")
+parser.add_argument("-d", "--decay", type=float, required=True,
+                    help="decay rate in %% of image height")    
+parser.add_argument("-c", "--center", type=float, required=True,
+                    help="center height in %% of image height")
+parser.add_argument("-f", '--framedrop', type=int, default=1,
+                    help="frame dropping rate")
+args = vars(parser.parse_args())
+```
+
+```python
+cap = cv2.VideoCapture(args['filename'])
+_, first_frame = cap.read()
+M, N = first_frame.shape[:2]
+
+_, mesh = np.meshgrid(np.arange(N), np.arange(M))
+d = args['decay'] * M / 100
+l1 = (args['center'] - args['size'] / 2) * M / 100
+l2 = (args['center'] + args['size'] / 2) * M / 100
+
+def alpha(x, d, l1, l2):
+    return 0.5 * (np.tanh((x - l1) / d) - np.tanh((x - l2) / d))
+```
+
+```python
+mask = alpha(mesh, d, l1, l2)
+mask = np.atleast_3d(mask)
+
+blur = np.ones((5, 5)) / 25
+def tiltshift(original):
+    filtered = cv2.filter2D(original, -1, blur)
+    blended = mask * original + (1 - mask) * filtered
+    blended = blended.astype(np.uint8)
+    return blended
+```
+
+```python
+fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+out = cv2.VideoWriter(args['output'], fourcc, 24., (N, M))
+```
+
+```python
+framecount = 0
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    framecount = framecount + 1
+    if framecount % args['framedrop'] > 0:
+        continue
+
+    blended = tiltshift(frame)
+    out.write(blended)
+```
+
+```python
+import cv2
+import numpy as np
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("filename", help="input video file path")
+parser.add_argument("-o", "--output", default="output.avi",
+                    help="output file path (default: ouput.avi)")
+parser.add_argument("-s", "--size", type=float, required=True,
+                    help="region size in %% of image height")
+parser.add_argument("-d", "--decay", type=float, required=True,
+                    help="decay rate in %% of image height")    
+parser.add_argument("-c", "--center", type=float, required=True,
+                    help="center height in %% of image height")
+parser.add_argument("-f", '--framedrop', type=int, default=1,
+                    help="frame dropping rate")
+args = vars(parser.parse_args())
+
+cap = cv2.VideoCapture(args['filename'])
+_, first_frame = cap.read()
+M, N = first_frame.shape[:2]
+
+_, mesh = np.meshgrid(np.arange(N), np.arange(M))
+d = args['decay'] * M / 100
+l1 = (args['center'] - args['size'] / 2) * M / 100
+l2 = (args['center'] + args['size'] / 2) * M / 100
+
+def alpha(x, d, l1, l2):
+    return 0.5 * (np.tanh((x - l1) / d) - np.tanh((x - l2) / d))
+
+mask = alpha(mesh, d, l1, l2)
+mask = np.atleast_3d(mask)
+
+blur = np.ones((5, 5)) / 25
+def tiltshift(original):
+    filtered = cv2.filter2D(original, -1, blur)
+    blended = mask * original + (1 - mask) * filtered
+    blended = blended.astype(np.uint8)
+    return blended
+
+fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+out = cv2.VideoWriter(args['output'], fourcc, 24., (N, M))
+
+framecount = 0
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    framecount = framecount + 1
+    if framecount % args['framedrop'] > 0:
+        continue
+
+    blended = tiltshift(frame)
+    out.write(blended)
+```

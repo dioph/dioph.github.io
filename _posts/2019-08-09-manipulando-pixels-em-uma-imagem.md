@@ -9,17 +9,17 @@ header:
 
 Esse é o primeiro post de uma série de exemplos práticos de processamento de imagens em Python usando OpenCV.<!--more--> Veremos como é simples realizar operações sobre arquivos de imagens.
 
-Uma **imagem** é uma função de duas variáveis (por exemplo $x$ e $y$) que correspondem a duas dimensões espaciais (largura e comprimento). Uma **imagem digital** é obtida a partir de processos de **amostragem** e **quantização**. Após esses processos, a imagem passa a ser representada por uma matriz de dimensão $M \times N$ ($M$ linhas e $N$ colunas) em que cada elemento é um **pixel** (*picture element*) que apenas pode assumir uma quantidade finita $L$ de níveis de quantização. Em geral, a representação da imagem se utiliza de inteiros entre $0$ e $L-1$ para associar a intensidade de cada pixel ao nível correspondente. Na quantização usual de 8 bits, por exemplo, $L=2^8=256$ níveis e cada pixel pode assumir valores entre 0 e 255, inclusive.
+Uma **imagem** é uma função f de duas variáveis (por exemplo x e y) que correspondem a duas dimensões espaciais (altura e largura). Uma **imagem digital** é obtida a partir dos processos de **amostragem** e **quantização**. Após esses processos, a imagem pode ser representada por uma matriz de dimensão M x N (M linhas e N colunas) em que cada elemento é um **pixel** (picture element) que apenas pode assumir uma quantidade finita L de níveis de quantização. Em geral, a representação da imagem se utiliza de inteiros entre 0 e L-1 para associar a intensidade de cada pixel ao nível correspondente. Na quantização usual de 8 bits, por exemplo, L = 256 níveis e cada pixel pode assumir valores entre 0 e 255, inclusive.
 
 No caso de imagens coloridas, são superpostas três imagens digitais nos canais vermelho, verde e azul (RGB). Cada pixel passa então a corresponder a uma sequência de três valores inteiros. Por exemplo, um pixel de 8 bits com valores (0,255,0) corresponde ao verde puro, enquanto que (127,127,127) corresponde à intensidade de cinza 50%.
 
-Ao utilizar as funcionalidades do OpenCV no Python, representamos imagens como *arrays* do numpy. Se utilizarmos a representação inteira em 8 bits, convém que o tipo do array seja dado como `uint8`, mas durante as manipulações aritméticas os arrays poderão eventualmente assumir tipos de ponto flutuante para representação de números reais. A manipulação de pixels em Python é portanto idêntica à manipulação de elementos de um array multidimensional. Exploraremos isso nos exemplos simples abaixo.
+Ao utilizar as funcionalidades do OpenCV no Python, representamos imagens como *arrays* do NumPy. Se utilizarmos a representação inteira em 8 bits, convém que o tipo do array seja dado como `uint8`, mas durante as manipulações aritméticas os arrays poderão eventualmente assumir tipos de ponto flutuante para representação de números reais. A manipulação de pixels em Python é portanto idêntica à manipulação de elementos de um array multidimensional. Exploraremos isso nos exemplos simples abaixo.
 
 ## Negativo de imagens
 
 O negativo de uma imagem $f$ é a imagem $g$ de mesmas dimensões com intensidade complementar a $f$:
 
-$$g(x,y)=255-f(x,y)$$
+$$g(x,y)=(L-1)-f(x,y)$$
 
 No caso de imagens digitais coloridas, a operação acima é realizada em cada pixel de cada um dos três canais da imagem original $f$. Vamos ver como fazer essa operação básica em Python.
 
@@ -33,7 +33,7 @@ filename = sys.argv[1]
 image = cv2.imread(filename, cv2.IMREAD_COLOR)
 ```
 
-Graças à capacidade do numpy de realizar operações vetorizadas, podemos encontrar o negativo da imagem completa com uma única linha:
+Graças à capacidade do NumPy de realizar operações vetorizadas, podemos encontrar o negativo da imagem completa com uma única linha:
 
 ```python
 negative = 255 - image
@@ -68,7 +68,9 @@ pi: 100, 100
 pj: 200, 200
 ```
 
-![](/assets/images/regions.png)
+<p align="center">
+    <img src="../../assets/images/regions.png">
+</p>
 
 ### Versão interativa
 
@@ -152,26 +154,40 @@ while True:
 
 E um pequeno GIF que ilustra a execução do programa é mostrado abaixo.
 
-![](/assets/images/regions2.gif)
+<p align="center">
+    <img src="../../assets/images/regions2.gif">
+</p>
 
 ## Regiões de Interesse
 
+Essas subregiões retangulares com as quais lidamos na seção anterior são conhecidas como **regiões de interesse** (ROIs). Um exemplo muito comum de manipulação de ROIs consiste na troca dos quadrantes de uma imagem. Se soubermos as dimensões da imagem em pixels, esse procedimento se torna meramente mais uma aplicação do slicing. 
+
 ```python
 import cv2
-import numpy as np
 import sys
 
 filename = sys.argv[1]
 orig = cv2.imread(filename, cv2.IMREAD_COLOR)
-N, M = orig.shape[:2]
+M, N = orig.shape[:2]
+```
 
-dest = np.zeros_like(orig)
-dest[:N//2, :M//2] = orig[N//2:, M//2:]
-dest[:N//2, M//2:] = orig[N//2:, :M//2]
-dest[N//2:, :M//2] = orig[:N//2, M//2:]
-dest[N//2:, M//2:] = orig[:N//2, :M//2]
+O atributo `shape` de uma imagem digital colorida será uma tupla de três elementos da forma (M, N, 3), onde M e N correspondem ao número de linhas e colunas da imagem, respectivamente. Usando o operador de divisão inteira `//` e assumindo que M e N sejam inteiros pares para que todos os quatro quadrantes tenham dimensões idênticas, podemos atribuir diretamente os quadrantes da imagem original para uma imagem destino de mesmo tamanho:
 
+```python
+dest = orig.copy()
+dest[:M//2, :N//2] = orig[M//2:, N//2:]
+dest[:M//2, N//2:] = orig[M//2:, :N//2]
+dest[M//2:, :N//2] = orig[:M//2, N//2:]
+dest[M//2:, N//2:] = orig[:M//2, :N//2]
+
+cv2.imshow('original', orig)
 cv2.imshow('swapped', dest)
 cv2.waitKey()
 ```
-![](/assets/images/trocaregioes.png)
+
+Para ilustrar o resultado obtido com a troca de quadrantes de forma clara, eis um exemplo de `orig` e `dest`:
+
+<p align="center">
+    <img hspace="20" src="../../assets/images/abcd.jpeg">
+    <img src="../../assets/images/trocaregioes.png">
+</p>
