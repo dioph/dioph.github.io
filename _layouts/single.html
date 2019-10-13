@@ -81,7 +81,7 @@ layout: default
               {% if post.url != page.url %}
                 {% include archive-single.html type="grid" %}
                 {% assign relatedCount = relatedCount | plus: 1 %}
-                {% if relatedCount >= 4 %}
+                {% if relatedCount >= 3 %}
                   {% break %}
                 {% endif %}
               {% endif %}

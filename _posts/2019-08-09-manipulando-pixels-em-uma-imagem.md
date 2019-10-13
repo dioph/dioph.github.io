@@ -26,8 +26,8 @@ No caso de imagens digitais coloridas, a operação acima é realizada em cada p
 Em primeiro lugar, o OpenCV provê uma função de leitura de arquivos de imagens (`imread`) que recebe, além do nome do arquivo, uma flag indicando como deverá ser armazenada a imagem (por exemplo em escala de cinza ou em cores). Para ler um arquivo fornecido pela linha de comando na execução do programa, podemos fazer:
 
 ```python
-import cv2
 import sys
+import cv2
 
 filename = sys.argv[1]
 image = cv2.imread(filename, cv2.IMREAD_COLOR)
@@ -42,8 +42,8 @@ negative = 255 - image
 Da mesma forma, caso queiramos realizar a operação exclusivamente em uma subregião retangular da figura, podemos usar a técnica de *slicing* para acessar apenas os elementos desejados do array. Por exemplo, considere que as coordenadas dos cantos superior esquerdo e inferior direito da região de interesse serão fornecidos pelo usuário durante a execução do programa. Podemos resolver esse problema em poucas linhas da seguinte forma:
 
 ```python
-import cv2
 import sys
+import cv2
 
 xi, yi = input('pi: ').split(',')
 xi = int(xi)
@@ -77,8 +77,8 @@ pj: 200, 200
 O OpenCV possibilita a interação em tempo real do usuário com as telas geradas pela interface (`imshow`) através de **eventos** que correspondem a ações realizadas no mouse ou no teclado. Podemos usar isso para definir interativamente, com o arrastar do mouse, a região retangular na qual queremos aplicar a operação de negativo. Para isso, precisamos definir uma função de *callback* que interprete os possíveis eventos realizados com o mouse e mostre o resultado em tempo real:
 
 ```python
-import cv2
 import sys
+import cv2
 
 filename = sys.argv[1]
 original = cv2.imread(filename, cv2.IMREAD_COLOR)
@@ -116,8 +116,8 @@ cv2.setMouseCallback('negative', invert)
 Por fim, mantemos o programa em um loop infinito de `ìmshow` até que a tecla ESC (valor 27 na tabela ASCII) seja pressionada e identificada pela função `waitKey`. Logo, programa completo para a versão interativa do problema é algo da seguinte forma:
 
 ```python
-import cv2
 import sys
+import cv2
 
 filename = sys.argv[1]
 original = cv2.imread(filename, cv2.IMREAD_COLOR)
@@ -163,8 +163,8 @@ E um pequeno GIF que ilustra a execução do programa é mostrado abaixo.
 Essas subregiões retangulares com as quais lidamos na seção anterior são conhecidas como **regiões de interesse** (ROIs). Um exemplo muito comum de manipulação de ROIs consiste na troca dos quadrantes de uma imagem. Se soubermos as dimensões da imagem em pixels, esse procedimento se torna meramente mais uma aplicação do slicing. 
 
 ```python
-import cv2
 import sys
+import cv2
 
 filename = sys.argv[1]
 orig = cv2.imread(filename, cv2.IMREAD_COLOR)

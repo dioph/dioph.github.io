@@ -10,8 +10,8 @@ header:
 <!--more-->
 
 ```python
-import cv2
 import sys
+import cv2
 
 filename = sys.argv[1]
 image = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
@@ -81,8 +81,8 @@ for i in range(M):
 O código final e seu exemplo de execução seriam algo do tipo:
 
 ```python
-import cv2
 import sys
+import cv2
 
 filename = sys.argv[1]
 image = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
