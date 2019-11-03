@@ -1,5 +1,5 @@
 # remote_theme: "mmistakes/minimal-mistakes@4.16.5"
-minimal_mistakes_skin  : "sunrise" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin  : "contrast" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 github: [metadata]
 
 # Site Settings
@@ -16,6 +16,11 @@ logo                     : "assets/images/rocktor.gif" # path of logo image to d
 search                   : true
 
 
+# comments:
+#   provider: "disqus"
+#   disqus:
+#     shortname: ""
+
 # Site Author
 author:
   name             : "Edu Nunes"
@@ -25,7 +30,7 @@ author:
   email            : diofanto.nunes@gmail.com
   github           : dioph
   telegram         : diofanto
-  reddit           : dioph
+  # reddit           : dioph
 
 # Site Footer
 footer:
