@@ -25,23 +25,23 @@ No caso de imagens digitais coloridas, a operação acima é realizada em cada p
 
 Em primeiro lugar, o OpenCV provê uma função de leitura de arquivos de imagens (`imread`) que recebe, além do nome do arquivo, uma flag indicando como deverá ser armazenada a imagem (por exemplo em escala de cinza ou em cores). Para ler um arquivo fornecido pela linha de comando na execução do programa, podemos fazer:
 
-```python
+{% highlight python linenos %}
 import sys
 import cv2
 
 filename = sys.argv[1]
 image = cv2.imread(filename, cv2.IMREAD_COLOR)
-```
+{% endhighlight %}
 
 Graças à capacidade do NumPy de realizar operações vetorizadas, podemos encontrar o negativo da imagem completa com uma única linha:
 
-```python
+{% highlight python linenos %}
 negative = 255 - image
-```
+{% endhighlight %}
 
 Da mesma forma, caso queiramos realizar a operação exclusivamente em uma subregião retangular da figura, podemos usar a técnica de *slicing* para acessar apenas os elementos desejados do array. Por exemplo, considere que as coordenadas dos cantos superior esquerdo e inferior direito da região de interesse serão fornecidos pelo usuário durante a execução do programa. Podemos resolver esse problema em poucas linhas da seguinte forma:
 
-```python
+{% highlight python linenos %}
 import sys
 import cv2
 
@@ -76,7 +76,7 @@ pj: 200, 200
 
 O OpenCV possibilita a interação em tempo real do usuário com as telas geradas pela interface (`imshow`) através de **eventos** que correspondem a ações realizadas no mouse ou no teclado. Podemos usar isso para definir interativamente, com o arrastar do mouse, a região retangular na qual queremos aplicar a operação de negativo. Para isso, precisamos definir uma função de *callback* que interprete os possíveis eventos realizados com o mouse e mostre o resultado em tempo real:
 
-```python
+{% highlight python linenos %}
 import sys
 import cv2
 
@@ -102,20 +102,20 @@ def invert(event, x, y, flags, param):
     if event == cv2.EVENT_RBUTTONDOWN:
         drawing = False
         negative = original.copy()
-```
+{% endhighlight %}
 
-No código acima da função `invert`, analisamos quatro possíveis operações com o mouse: `EVENT_LBUTTONDOWN` corresponde ao pressionar do botão esquerdo do mouse, e marcará o ponto inicial da região retangular, $(x_o, y_o)$. A flag booleana `drawing` indica que o arrastar do mouse (`EVENT_MOUSEMOVE`) serão consideradas como parte do desenhar do retângulo; se `drawing` for verdadeiro, estabelecemos a posição atual do mouse $(x,y)$ e a posição inicial armazenada em $(x_o,y_o)$ como os dois cantos do retângulo (precisamos garantir que estejam ordenados com a função `sorted`). No caso de soltarmos o botão esquerdo, `EVENT_LBUTTONUP` será emitido e `drawing` passará a ser falso. Além disso, ao pressionar o botão direito (`EVENT_RBUTTONDOWN`) restauramos a imagem ao seu estado original.
+No código acima da função `invert`, analisamos quatro possíveis operações com o mouse: `EVENT_LBUTTONDOWN` corresponde ao pressionar do botão esquerdo do mouse, e marcará o ponto inicial da região retangular, (`xo`, `yo`). A flag booleana `drawing` indica que o arrastar do mouse (`EVENT_MOUSEMOVE`) serão consideradas como parte do desenhar do retângulo; se `drawing` for verdadeiro, estabelecemos a posição atual do mouse (`x`, `y`) e a posição inicial armazenada em (`xo`, `yo`) como os dois cantos do retângulo (precisamos garantir que estejam ordenados com a função `sorted`). No caso de soltarmos o botão esquerdo, `EVENT_LBUTTONUP` será emitido e `drawing` passará a ser falso. Além disso, ao pressionar o botão direito (`EVENT_RBUTTONDOWN`) restauramos a imagem ao seu estado original.
 
 Para utilizarmos essa função de callback em uma tela do OpenCV, podemos criá-la ainda em branco com a função `namedWindow` e em seguinda utilizar `setMouseCallBack` da seguinte forma:
 
-```python
+{% highlight python linenos %}
 cv2.namedWindow('negative')
 cv2.setMouseCallback('negative', invert)
-```
+{% endhighlight %}
 
 Por fim, mantemos o programa em um loop infinito de `ìmshow` até que a tecla ESC (valor 27 na tabela ASCII) seja pressionada e identificada pela função `waitKey`. Logo, programa completo para a versão interativa do problema é algo da seguinte forma:
 
-```python
+{% highlight python linenos %}
 import sys
 import cv2
 
@@ -162,18 +162,18 @@ E um pequeno GIF que ilustra a execução do programa é mostrado abaixo.
 
 Essas subregiões retangulares com as quais lidamos na seção anterior são conhecidas como **regiões de interesse** (ROIs). Um exemplo muito comum de manipulação de ROIs consiste na troca dos quadrantes de uma imagem. Se soubermos as dimensões da imagem em pixels, esse procedimento se torna meramente mais uma aplicação do slicing. 
 
-```python
+{% highlight python linenos %}
 import sys
 import cv2
 
 filename = sys.argv[1]
 orig = cv2.imread(filename, cv2.IMREAD_COLOR)
 M, N = orig.shape[:2]
-```
+{% endhighlight %}
 
 O atributo `shape` de uma imagem digital colorida será uma tupla de três elementos da forma (M, N, 3), onde M e N correspondem ao número de linhas e colunas da imagem, respectivamente. Usando o operador de divisão inteira `//` e assumindo que M e N sejam inteiros pares para que todos os quatro quadrantes tenham dimensões idênticas, podemos atribuir diretamente os quadrantes da imagem original para uma imagem destino de mesmo tamanho:
 
-```python
+{% highlight python linenos %}
 dest = orig.copy()
 dest[:M//2, :N//2] = orig[M//2:, N//2:]
 dest[:M//2, N//2:] = orig[M//2:, :N//2]
@@ -183,7 +183,7 @@ dest[M//2:, N//2:] = orig[:M//2, :N//2]
 cv2.imshow('original', orig)
 cv2.imshow('swapped', dest)
 cv2.waitKey()
-```
+{% endhighlight %}
 
 Para ilustrar o resultado obtido com a troca de quadrantes de forma clara, eis um exemplo de `orig` e `dest`:
 

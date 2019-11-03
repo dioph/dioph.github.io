@@ -9,9 +9,10 @@ header:
 Nesse tutorial vamos buscar entender o que são e para que podem ser usados histogramas de imagens.
 <!--more-->
 
+
 ## Equalização
 
-```python
+{% highlight python linenos %}
 import cv2
 import numpy as np
 
@@ -41,11 +42,11 @@ while True:
     
     if cv2.waitKey(20) & 0xFF == 27:
         break
-```
+{% endhighlight %}
 
 ## Detecção de Movimentos
 
-```python
+{% highlight python linenos %}
 import cv2
 import numpy as np
 
