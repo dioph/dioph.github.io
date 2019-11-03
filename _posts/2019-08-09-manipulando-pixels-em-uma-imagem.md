@@ -1,10 +1,11 @@
 ---
-title: "Manipulando pixels em uma imagem"
+title: "Manipulando imagens do OpenCV usando arrays do NumPy"
 date: 2019-08-09
 tags: [python, opencv]
 category: casual-code
 header:
     teaser: /assets/images/regions.png
+toc: true
 ---
 
 Esse é o primeiro post de uma série de exemplos práticos de processamento de imagens em Python usando OpenCV.<!--more--> Veremos como é simples realizar operações sobre arquivos de imagens.
@@ -58,7 +59,7 @@ image = cv2.imread(filename, cv2.IMREAD_COLOR)
 image[xi:xj, yi:yj] = 255 - image[xi:xj, yi:yj]
 cv2.imshow('negative', image)
 cv2.waitKey()
-```
+{% endhighlight %}
 
 A função `imshow` abre uma tela identificada pelo título (fornecido no primeiro argumento) e mostra a imagem (segundo argumento) nessa tela. A função `waitKey`, como indica o nome, mantém o programa rodando (e, portanto, a tela aberta) até que uma tecla seja pressionada no teclado. Um possível resultado da execução do programa é o seguinte: 
 
@@ -150,7 +151,7 @@ while True:
     if cv2.waitKey(20) & 0xFF == 27:
         break
 
-```
+{% endhighlight %}
 
 E um pequeno GIF que ilustra a execução do programa é mostrado abaixo.
 
