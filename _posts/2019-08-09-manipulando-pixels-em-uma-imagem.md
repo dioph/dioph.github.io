@@ -5,7 +5,6 @@ tags: [python, opencv]
 category: casual-code
 header:
     teaser: /assets/images/regions.png
-toc: true
 ---
 
 Esse é o primeiro post de uma série de exemplos práticos de processamento de imagens em Python usando OpenCV.<!--more--> Veremos como é simples realizar operações sobre arquivos de imagens.
@@ -20,7 +19,7 @@ Ao utilizar as funcionalidades do OpenCV no Python, representamos imagens como *
 
 O negativo de uma imagem $f$ é a imagem $g$ de mesmas dimensões com intensidade complementar a $f$:
 
-$$g(x,y)=(L-1)-f(x,y)$$
+\\[g(x,y)=(L-1)-f(x,y)\\]
 
 No caso de imagens digitais coloridas, a operação acima é realizada em cada pixel de cada um dos três canais da imagem original $f$. Vamos ver como fazer essa operação básica em Python.
 

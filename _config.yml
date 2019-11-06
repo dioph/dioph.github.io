@@ -133,6 +133,7 @@ defaults:
       related: true
       usemathjax: true
       tagify: true
+      toc: true
   - scope:
       path: ""
       type: pages

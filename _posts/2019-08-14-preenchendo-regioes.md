@@ -5,7 +5,7 @@ tags: [python, opencv]
 category: casual-code
 header:
     teaser: /assets/images/bolhas.png
-toc: true
+excerpt: Uma das principais etapas em visão computacional é a segmentação da imagem. Nesse tutorial vamos explorar o processo de rotulagem dos pixels.
 ---
 <!--more-->
 
