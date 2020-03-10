@@ -273,6 +273,14 @@
         </li>
       {% endif %}
 
+      {% if author.kaggle %}
+        <li>
+          <a href="https://www.kaggle.com/{{ author.kaggle }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-kaggle" aria-hidden="true"></i> Kaggle
+          </a>
+        </li>
+      {% endif %}
+
       {% include author-profile-custom-links.html %}
     </ul>
   </div>
