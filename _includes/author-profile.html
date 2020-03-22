@@ -89,6 +89,14 @@
         </li>
       {% endif %}
 
+      {% if author.fosstodon %}
+        <li>
+          <a href="https://fosstodon.org/@{{ author.fosstodon }}" itemprop="sameAs" rel="me">
+            <i class="fab fa-fw fa-mastodon" aria-hidden="true"></i> Mastodon
+          </a>
+        </li>
+      {% endif %}
+
       {% if author.facebook %}
         <li>
           <a href="https://www.facebook.com/{{ author.facebook }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
@@ -117,6 +125,14 @@
         <li>
           <a href="https://instagram.com/{{ author.instagram }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
             <i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram
+          </a>
+        </li>
+      {% endif %}
+
+      {% if author.telegram %}
+        <li>
+          <a href="https://t.me/{{ author.telegram }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-telegram" aria-hidden="true"></i> Telegram
           </a>
         </li>
       {% endif %}
@@ -256,19 +272,11 @@
           </a>
         </li>
       {% endif %}
-      
-      {% if author.telegram %}
-        <li>
-          <a href="https://t.me/{{ author.telegram }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
-            <i class="fab fa-telegram" aria-hidden="true"></i> Telegram
-          </a>
-        </li>
-      {% endif %}
         
       {% if author.reddit %}
         <li>
           <a href="https://www.reddit.com/user/{{ author.reddit }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
-            <i class="fab fa-reddit" aria-hidden="true"></i> Reddit
+            <i class="fab fa-fw fa-reddit" aria-hidden="true"></i> Reddit
           </a>
         </li>
       {% endif %}
@@ -276,7 +284,7 @@
       {% if author.kaggle %}
         <li>
           <a href="https://www.kaggle.com/{{ author.kaggle }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
-            <i class="fab fa-kaggle" aria-hidden="true"></i> Kaggle
+            <i class="fab fa-fw fa-kaggle" aria-hidden="true"></i> Kaggle
           </a>
         </li>
       {% endif %}
