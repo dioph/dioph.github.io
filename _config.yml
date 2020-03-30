@@ -1,25 +1,62 @@
-# remote_theme: "mmistakes/minimal-mistakes@4.16.5"
+# remote_theme: "mmistakes/minimal-mistakes@4.19.1"
 minimal_mistakes_skin  : "contrast" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 github: [metadata]
 
 # Site Settings
-locale                   : "en-US"
+locale                   : "en"
 title                    : "Edu's Page"
 title_separator          : "|"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Edu Nunes"
-description              : "My Good Place"
+description              : ""
 url                      : "https://dioph.github.io"
+baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "dioph/dioph.github.io"
 teaser                   : "assets/images/placeholder-300x225.png" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : "assets/images/rocktor.gif" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-search                   : true
+masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
+breadcrumbs              : true # true, false (default)
+words_per_minute         : 200
 
+comments:
+  provider               : # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "custom"
+  disqus:
+    shortname            : # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
+  discourse:
+    server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
+  facebook:
+    # https://developers.facebook.com/docs/plugins/comments
+    appid                :
+    num_posts            : # 5 (default)
+    colorscheme          : # "light" (default), "dark"
+  utterances:
+    theme                : # "github-light" (default), "github-dark"
+    issue_term           : # "pathname" (default)
+  staticman:
+    branch               : # "master"
+    endpoint             : # "https://{your Staticman v3 API}/v3/entry/github/"
+reCaptcha:
+  siteKey                :
+  secret                 :
+atom_feed:
+  path                   : # blank (default) uses feed.xml
+search                   : # true, false (default)
+search_full_content      : # true, false (default)
+search_provider          : # lunr (default), algolia, google
+algolia:
+  application_id         : # YOUR_APPLICATION_ID
+  index_name             : # YOUR_INDEX_NAME
+  search_only_api_key    : # YOUR_SEARCH_ONLY_API_KEY
+  powered_by             : # true (default), false
+google:
+  search_engine_id       : # YOUR_SEARCH_ENGINE_ID
+  instant_search         : # false (default), true
+# SEO Related
+google_site_verification :
+bing_site_verification   :
+yandex_site_verification :
+naver_site_verification  :
 
-# comments:
-#   provider: "disqus"
-#   disqus:
-#     shortname: ""
 
 # Site Author
 author:
@@ -32,6 +69,25 @@ author:
   telegram         : diofanto
   kaggle           : edununes
   fosstodon        : alpaca
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      # url: mailto:your.name@email.com
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      # url: "https://your-website.com"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      # url: "https://twitter.com/"
+    - label: "Facebook"
+      icon: "fab fa-fw fa-facebook-square"
+      # url: "https://facebook.com/"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      # url: "https://github.com/"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      # url: "https://instagram.com/"
 
 # Site Footer
 footer:
@@ -54,6 +110,7 @@ footer:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url:
+
 
 # Reading Files
 include:
@@ -80,6 +137,7 @@ exclude:
   - log
   - node_modules
   - package.json
+  - package-lock.json
   - Rakefile
   - README
   - tmp
@@ -91,6 +149,7 @@ keep_files:
 encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
+
 # Conversion
 markdown: kramdown
 highlighter: rouge
@@ -98,8 +157,11 @@ lsi: false
 excerpt_separator: <!--more-->
 incremental: false
 
+
 # Markdown Processing
 kramdown:
+  input: GFM
+  hard_wrap: false
   auto_ids: true
   footnote_nr: 1
   entity_output: as_char
@@ -107,10 +169,11 @@ kramdown:
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
 
+
 # Sass/SCSS
 sass:
   sass_dir: _sass
-  style: compressed # http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+  style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
 
 # Outputting
@@ -118,8 +181,6 @@ permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 timezone: America/Fortaleza # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-tag_archive:
-  path: /tags/
 
 defaults:
   # _posts
@@ -135,13 +196,12 @@ defaults:
       usemathjax: true
       tagify: true
       toc: true
+  # _pages
   - scope:
       path: ""
       type: pages
     values:
       usemathjax: true
-
-breadcrumbs: true  # disabled by default
 
 # Plugins (previously gems:)
 plugins:
@@ -149,7 +209,6 @@ plugins:
   - jekyll-sitemap
   - jekyll-gist
   - jekyll-feed
-  - jemoji
   - jekyll-include-cache
 
 # mimic GitHub Pages with --safe
@@ -158,6 +217,33 @@ whitelist:
   - jekyll-sitemap
   - jekyll-gist
   - jekyll-feed
-  - jemoji
   - jekyll-include-cache
 
+
+# Archives
+#  Type
+#  - GitHub Pages compatible archive pages built with Liquid ~> type: liquid (default)
+#  - Jekyll Archives plugin archive pages ~> type: jekyll-archives
+#  Path (examples)
+#  - Archive page should exist at path when using Liquid method or you can
+#    expect broken links (especially with breadcrumbs enabled)
+#  - <base_path>/tags/my-awesome-tag/index.html ~> path: /tags/
+#  - <base_path>/categories/my-awesome-category/index.html ~> path: /categories/
+#  - <base_path>/my-awesome-category/index.html ~> path: /
+category_archive:
+  type: liquid
+  path: /
+tag_archive:
+  type: liquid
+  path: /tags/
+# https://github.com/jekyll/jekyll-archives
+# jekyll-archives:
+#   enabled:
+#     - categories
+#     - tags
+#   layouts:
+#     category: archive-taxonomy
+#     tag: archive-taxonomy
+#   permalinks:
+#     category: /categories/:name/
+#     tag: /tags/:name/
