@@ -1,14 +1,14 @@
 ---
-title: "Filtragem no domínio da frequência"
+title: "Correcting non-uniform lighting problems"
 date: 2019-10-11
 tags: [python, opencv]
 category: casual-code
 ---
 <!--more-->
 
-## Filtragem homomórfica
+## Homomorphic filtering
 
-```python
+{% highlight python linenos %}
 import sys
 import cv2
 import numpy as np
@@ -66,4 +66,4 @@ cv2.createTrackbar(d0_slider_name, window_name, 0,
 
 on_change(0)
 cv2.waitKey(0)
-```
+{% endhighlight %}
