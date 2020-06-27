@@ -62,7 +62,7 @@ where `hist` is the array with the counts we want and `bins` is simply an array 
 hist = np.bincount(image.ravel(), minlength=256)
 ```
 
-Compared to `histogram`, running `bincount` can be up to **10x** faster. However, OpenCV itself has a histogram calculation function, about **40x** more efficient than the NumPy version! This is generally true for most of the features implemented in OpenCV, which are not only optimized for image processing, but are also implemented in C/C++ behind the scenes. The OpenCV function that will interest us is `calcHist`, taking the image, the channel in which you want to compute the histogram, a mask of a particular region of the image in which you want to compute the histogram, the number of bins (256), and the range (0 to 256):
+Compared to `histogram`, running `bincount` can be up to **10x** faster. However, OpenCV itself has a histogram calculation function, about **40x** more efficient than the NumPy version! This is generally true for most of the features implemented in OpenCV, which are not only optimized for image processing, but are also implemented in C/C++ behind the scenes. The OpenCV function that will be of interest to us is `calcHist`, taking the image, the channel in which you want to compute the histogram, a mask of a particular region of the image in which you want to compute the histogram, the number of bins (256), and the range (0 to 256):
 
 ```python
 hist = cv2.calcHist([image], [0], None, [256], [0, 256])
