@@ -1,4 +1,4 @@
-# remote_theme: "mmistakes/minimal-mistakes@4.19.1"
+# remote_theme: "mmistakes/minimal-mistakes@4.23.0"
 minimal_mistakes_skin  : "contrast" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 github: [metadata]
 
@@ -40,6 +40,7 @@ reCaptcha:
   secret                 :
 atom_feed:
   path                   : # blank (default) uses feed.xml
+  hide                   : # true, false (default)
 search                   : # true, false (default)
 search_full_content      : # true, false (default)
 search_provider          : # lunr (default), algolia, google
@@ -62,13 +63,13 @@ naver_site_verification  :
 author:
   name             : "Edu Nunes"
   avatar           : "/assets/images/okarin.jpg"
-  bio              : "Undergrad EE & Physics"
+  bio              : "EE & Data Science"
   location         : "Natal, Brazil"
   email            : dioph@pm.me
   github           : dioph
   telegram         : diofanto
   kaggle           : edununes
-  fosstodon        : alpaca
+  # fosstodon        : alpaca
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
